@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Container, Row, Col} from 'react-bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
+
 
 import ProductForm from './components/ProductForm'
 import ProductTable from './components/ProductTable'
 
 import {fetchInitialData} from './action';
-import {calculateResult} from './utils/calculateResult'
+import {calculateTableProps} from './utils/calculateTableProps'
 
 export default function App() {
   const [data, setData] = useState([])
@@ -21,9 +21,8 @@ export default function App() {
     })
   }, [])
 
-  const handleAddToCart = ({ width, length, selectedList, selectedPipe, frameType }) => {
-    console.log({ width, length, selectedList, selectedPipe, frameType })
-    const newItem = calculateResult({
+  const handleAddToTable = ({ width, length, selectedList, selectedPipe, frameType }) => {
+    const newItem = calculateTableProps({
       width,
       length,
       selectedList,
@@ -32,33 +31,28 @@ export default function App() {
       config,
       data
     })
-    console.log(newItem)
     setCart([...cart, newItem])
   }
-  
-
-  if (!config) return <div>Loading...</div>
 
   return (
     <Container fluid className="mt-4">
       <Row>
         <Col md={4} className="border-end pe-4">
           <div className="form-section">
-            <ProductForm data={data} config={config} handler={handleAddToCart} />
+            <ProductForm data={data} config={config} handler={handleAddToTable} />
           </div>
         </Col>
 
+        {/*Результаты подсчетов*/}
         <Col md={4} className="border-end pe-4">
           <div className="table-section">
             <ProductTable cart={cart} />
           </div>
         </Col>
 
-       {/*возможно лучше было сделать как модальное окно*/}
         <Col md={4} className="ps-4">
           <div className="cart-section">
             <h3>Корзина</h3>
-            {/* Дополнительное содержимое корзины */}
           </div>
         </Col>
       </Row>

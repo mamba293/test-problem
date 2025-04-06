@@ -1,4 +1,4 @@
-export function calculateResult({ width, length, selectedList, selectedPipe, frameType, config, data }) {
+export function calculateTableProps({ width, length, selectedList, selectedPipe, frameType, config, data }) {
   const area = parseFloat(width) * parseFloat(length)
 
   const sheetWidth = parseFloat(selectedList?.width || 1)
@@ -12,7 +12,7 @@ export function calculateResult({ width, length, selectedList, selectedPipe, fra
   const usableWidth = parseFloat(width) - (pipeWidthMM / 1000)
   const usableLength = parseFloat(length) - (pipeWidthMM / 1000)
 
-  const verticalCount = Math.floor(usableWidth / frameStepM) + 1
+  const verticalCount = Math.floor(usableWidth / frameStepM) + 1 
   const horizontalCount = Math.floor(usableLength / frameStepM) + 1
 
   const verticalLength = verticalCount * parseFloat(length)

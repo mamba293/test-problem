@@ -1,15 +1,18 @@
 import { Form, Button } from 'react-bootstrap';
 import {useState} from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'
 
 
-export default function ProductForm({data, config, handler}) {
+export default function ProductForm({data, config, onSubmit}) {
     const [selectedList, setSelectedList] = useState(null);
     const [selectedPipe, setSelectedPipe] = useState(null);
     const [width, setWidth] = useState('');
     const [length, setLength] = useState('');
     const [frameType, setFrameType] = useState('');
 
+    const getName = (list) => {
+      return `${list.name}, материал ${list.material === "metal" ? "металл" : "пластик"}`
+    }
+    
     return (
     <>
         <h4>Ввод данных</h4>
@@ -22,7 +25,7 @@ export default function ProductForm({data, config, handler}) {
               >
                 {selectedList === null && <option value="">Выберите материал</option>}
                 {data.filter(item => item.type === 'list').map(list => (
-                  <option key={list.name} value={list.name}>{`${list.name}, материал ${list.material === "metal" ? "металл" : "пластик"}`}</option>
+                  <option key={list.name} value={list.name}>{getName(list)}</option>
                 ))}
               </Form.Select>
             </Form.Group>
@@ -76,7 +79,7 @@ export default function ProductForm({data, config, handler}) {
 
             <Button
               onClick={() =>
-                handler({
+                onSubmit({
                   width,
                   length,
                   selectedList,
